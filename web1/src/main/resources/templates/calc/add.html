@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!-- xmlns:th -> th 키워드가 정2되어있는 곳의 주소 -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="" method="post">
+      <input type="text" name="num1" id="" />
+      <select name="" id="value">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+      </select>
+      <input type="text" name="num2" id="" />
+      <button type="submit">result</button>
+    </form>
+    <ul>
+      <!-- ?는 it can be null이라는 뜻 -->
+      <li>Num1 : <span th:text="${addDto?.num1}"></span></li>
+      <li>Num2 : <span th:text="${addDto?.num2}"></span></li>
+      <!-- <li>result : <span th:text="${addDto?.result}"></span></li> -->
+      <li>result : <span th:text="${result?}"></span></li>
+    </ul>
+  </body>
+</html>
