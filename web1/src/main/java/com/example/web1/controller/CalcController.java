@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class CalcController {
 
     // servlet 역할
-
     @GetMapping("/add")
     public void addGet() {
         log.info("/calc/add request");

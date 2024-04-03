@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <ul>
+      <!-- <c:url value="">와 같은 역할 -->
+      <!-- '/'가 붙으면 'localhost:8080/'와 같이 root부터 시작 -->
+      <li><a href="" th:href="@{/sample/ex1}">ex1</a></li>
+
+      <!-- '/'가 안붙으면 localhost:8080/sample/'ex1' 제일 뒷주소만 변경 -->
+      <li><a href="" th:href="@{ex1}">ex1</a></li>
+
+      <!-- /sample/ex4?param1=10&param2=20 과 같은 역할 -->
+      <li><a href="" th:href="@{ex4(param1 = 'data1', param2='data2')}">ex4</a></li>
+    </ul>
+  </body>
+</html>

@@ -6,13 +6,10 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>EX1</h1>
-    <p th:text="${result}"></p>
-    <script>
-      const result = "[[${result}]]";
-    </script>
-    <script th:inline="javascript">
-      const result1 = [[${result}]];
-    </script>
+    <!-- header -->
+    <div th:insert="/fragments/separate :: header"></div>
+    <h1>ex5</h1>
+    <div th:insert="/fragments/separate :: content"></div>
+    <div th:insert="/fragments/separate :: footer"></div>
   </body>
 </html>

@@ -6,4 +6,23 @@ annotation
 @RequestParam() : request에서 넘어오는 parameter의 이름 지정할 때 사용
 @ModelAttribute : Dto 객체 이름 지정( 다음페이지까지 데이터 살아있음)
                     == model.addAttribute("page", page)
-                    
+
+모든 요청은 컨트롤러에 경로가 존재해야함
+
+직접적으로 파일 링크 불가
+<a href="~.html">index</a> (x)
+
+컨트롤러 경로 지정
+<a href="/">index</a> (o)
+
+
+DB연동
+1) JDBC 사용
+-------------------
+스프링 프레임워크
+1) JDBC 사용(스프링 x)
+2) 스프링 DAO (x)
+3) mybatis
+4) hybernate ORM
+
+https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html

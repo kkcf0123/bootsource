@@ -7,5 +7,141 @@
   </head>
   <body>
     <h1>basic</h1>
+    <h4>bno : <span th:text="${param.bno}"></span></h4>
+    <h4>bno : <span th:text="${bno}"></span></h4>
+    <div th:text="${name}"></div>
+    <div th:text="${dto}"></div>
+    <!-- <div th:utext="${'<h3>'+dto.first+'</h3>'}"></div> -->
+    <!-- <div th:text="${'<h3>'+dto.first+'</h3>'}"></div> -->
+    <!-- <ul>
+      <li>ID : <span th:text="${dto.id}"></span></li>
+      <li>first : <span th:text="${dto.first}"></span></li>
+      <li>last : <span th:text="${dto.last}"></span></li>
+      <li>regTime : <span th:text="${dto.regTime}"></span></li>
+    </ul> -->
+
+    <h4>SampleDto List</h4>
+    <ul>
+      <!-- <li th:each="dto : ${list}">[[${dto}]]</li> -->
+      <li th:each="dto : ${list}" th:text="${dto}"></li>
+    </ul>
+
+    <h4>SampleDto List3</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>first</th>
+          <th>last</th>
+          <th>date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="dto : ${list}">
+          <td th:text="${dto.id}"></td>
+          <td th:text="${dto.first}"></td>
+          <td th:text="${dto.last}"></td>
+          <!-- <td th:text="${dto.regTime}"></td> -->
+          <td th:text="${#temporals.format(dto.regTime, 'yyyy-MM-dd hh:mm:ss')}"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>SampleDto List4</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>INDEX</th>
+          <th>COUNT</th>
+          <th>SIZE</th>
+          <th>ODD/EVEN</th>
+          <th>ID</th>
+          <th>FIRST</th>
+          <th>LAST</th>
+          <th>DATE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 
+          index : 0부터 시작
+          count : 1부터 시작
+          size : 전체 갯수
+          odd / even : 홀,짝 확인
+         -->
+        <tr th:each="dto, state : ${list}">
+          <td th:text="${state.index}"></td>
+          <td th:text="${state.count}"></td>
+          <td th:text="${state.size}"></td>
+          <td th:text="${state.odd} + '/' + ${state.even}"></td>
+          <td th:text="${dto.id}"></td>
+          <td th:text="${dto.first}"></td>
+          <td th:text="${dto.last}"></td>
+          <!-- <td th:text="${dto.regTime}"></td> -->
+          <td th:text="${#temporals.format(dto.regTime, 'yyyy-MM-dd hh:mm:ss')}"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- <h4>SampleDto List6</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>FIRST</th>
+          <th>LAST</th>
+          <th>DATE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="dto : ${list}" th:if="${dto.id % 5 == 0}">
+          <td th:text="${dto.id}"></td>
+          <td th:text="${dto.first}"></td>
+          <td th:text="${dto.last}"></td>
+          <td th:text="${#temporals.format(dto.regTime, 'yyyy-MM-dd hh:mm:ss')}"></td>
+        </tr>
+      </tbody>
+    </table> -->
+
+    <h4>SampleDto List5</h4>
+    <ul>
+      <li th:each="dto : ${list}">
+        <span th:if="${dto.id % 5 == 0}" th:text="${'-----------'+dto.id}"></span>
+        <span th:unless="${dto.id % 5 == 0}" th:text="${dto.first}"></span>
+      </li>
+    </ul>
+
+    <h4>SampleDto List7</h4>
+    <ul>
+      <li th:each="dto : ${list}" th:text="${dto.id % 5 == 0} ? ${'-----------'+dto.id}:${dto.first}"></li>
+    </ul>
+
+    <h4>SampleDto List8</h4>
+    <ul>
+      <li th:each="dto,state : ${list}" th:switch="${state.even}">
+        <span th:case="true" th:text="${dto.first}"></span>
+        <span th:case="false" th:text="${dto.last}"></span>
+      </li>
+    </ul>
+
+    <h4>SampleDto List9</h4>
+    <table>
+      <thead>
+        <tr th:each="dto : ${list}">
+          <td>
+            <a href="" th:text="${dto.first}" th:href="@{ex1(id=${dto.id})}"></a>
+          </td>
+          <td th:text="${dto.last}"></td>
+          <!-- <td th:text="${dto.regTime}"></td> -->
+          <td th:text="${#temporals.format(dto.regTime, 'yyyy-MM-dd hh:mm:ss')}"></td>
+      </tbody>
+    </table>
+    <h4>thymeleaf utility object check</h4>
+    <div th:text="${now}"></div>
+    <div th:text="${#dates.format(now, 'yyyy-MM-dd')}"></div>
+    <div th:text="${price}"></div>
+    <div th:text="${#numbers.formatInteger(price,3,'COMMA')}"></div>
+    <div th:text="${title}"></div>
+    <div th:utext="${#strings.replace(title, 's','<b>s</b>')}"></div>
+    <div th:text="${options}"></div>
   </body>
 </html>
