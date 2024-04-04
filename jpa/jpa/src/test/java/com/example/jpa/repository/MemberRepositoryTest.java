@@ -36,7 +36,8 @@ public class MemberRepositoryTest {
     public void readTest() {
         // memberRepository.findAll().forEach(member -> System.out.println(member));
         memberRepository.findById("user1");
-        memberRepository.findByUserNmae("user1").forEach(member -> System.out.println(member));
+        // memberRepository.findByUserNmae("user1").forEach(member ->
+        // System.out.println(member));
     }
 
     @Test
@@ -47,7 +48,6 @@ public class MemberRepositoryTest {
             member.setRoleType(RoleType.ADMIN);
             memberRepository.save(member);
         });
-
     }
 
     @Test

@@ -1,5 +1,6 @@
 annotation
 @Controller : 컨트롤러 클래스 위에 설정/ 스프링 컨테이너가 해당 클래스의 객체를 생성한 후 관리 해 줌
+@Service : 서비스 클래스 위에 설정 / "
 @RequestMapping(value="",method=) : 경로지정(old version)
 @GetMapping("") : @RequestMapping의 GET 간략화
 @PostMapping("") : @RequestMapping의 POST 간략화
@@ -7,6 +8,7 @@ annotation
 @ModelAttribute : Dto 객체 이름 지정( 다음페이지까지 데이터 살아있음)
                     == model.addAttribute("page", page)
 
+@Autowired : object inject
 모든 요청은 컨트롤러에 경로가 존재해야함
 
 직접적으로 파일 링크 불가

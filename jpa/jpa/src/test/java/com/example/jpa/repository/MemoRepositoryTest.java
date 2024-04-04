@@ -17,7 +17,7 @@ public class MemoRepositoryTest {
 
     @Test // test method(return type is void)
     public void insertMemo() {
-        for (int i = 0; i < 101; i++) {
+        for (int i = 1; i < 101; i++) {
             Memo memo = new Memo();
             memo.setMemoText("MemoText" + i);
             memoRepository.save(memo); // == dao.insert()
