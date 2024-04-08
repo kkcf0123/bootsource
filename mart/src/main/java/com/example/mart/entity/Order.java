@@ -17,6 +17,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -31,7 +32,7 @@ import lombok.ToString;
 @Builder
 @Setter
 @Getter
-@ToString
+@ToString(exclude = { "orderItems", "delivery" })
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {
@@ -51,6 +52,9 @@ public class Order {
     private OrderStatus orderStatus;
 
     @Builder.Default
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
     private List<OrderItem> orderItems = new ArrayList<>();
+
+    @OneToOne
+    private Delivery delivery;
 }

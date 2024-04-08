@@ -7,11 +7,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.example.mart.entity.Delivery;
+import com.example.mart.entity.DeliveryStatus;
 import com.example.mart.entity.Item;
 import com.example.mart.entity.Member;
 import com.example.mart.entity.Order;
 import com.example.mart.entity.OrderItem;
 import com.example.mart.entity.OrderStatus;
+import com.example.mart.repository.DeliveryRepository;
 import com.example.mart.repository.ItemRepository;
 import com.example.mart.repository.MemberRepository;
 import com.example.mart.repository.OrderItemRepository;
@@ -30,6 +33,9 @@ public class MartRepositoryTest {
 
     @Autowired
     private OrderItemRepository orderItemRepository;
+
+    @Autowired
+    private DeliveryRepository deliveryRepository;
 
     @Test
     public void insertTest() {
@@ -115,5 +121,25 @@ public class MartRepositoryTest {
         orderItemRepository.delete(OrderItem.builder().id(1L).build());
         orderRepository.deleteById(1L);
     }
+
+    public void orderInsertDeliveryTest() {
+        Member member = Member.builder().id(1L).build();
+        Item item = Item.builder().id(1L).build();
+
+        Delivery delivery = Delivery.builder().city("서울시").street("123-12").zipcode("11160")
+                .deliveryStatus(DeliveryStatus.READY).build();
+        deliveryRepository.save(delivery);
+
+        Order order = Order.builder().member(member).orderDate(LocalDateTime.now()).orderStatus(OrderStatus.ORDER)
+                .delivery(delivery).build();
+        orderRepository.save(order);
+    }
+
+    // public void deliveryOrderGet() {
+    // Delivery delivery = deliveryRepository.findById(1L).get();
+
+    // System.out.println(delivery);
+    // System.out.println("관련 주문 " + delivery.getOrder());
+    // }
 
 }

@@ -20,8 +20,8 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-public class Locker {
+@ToString(exclude = "sportsMember")
+public class Locker extends BaseEntity {
 
     @SequenceGenerator(name = "locker_seq_gen", sequenceName = "locker_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "locker_seq_gen")
@@ -32,5 +32,5 @@ public class Locker {
     private String name;
 
     @OneToOne
-    private Locker locker;
+    private SportsMember sportsMember;
 }
