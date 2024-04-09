@@ -2,6 +2,7 @@ package com.example.todo.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
 
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,10 @@ public class TodoServiceImpl {
 
     public List<TodoDto> getList() {
         List<Todo> list = todoRepository.findByCompleted(false);
-        List<TodoDto> todoList = new ArrayList<>();
-        list.forEach(todo -> todoList.add(entityToDto(todo)));
+        // List<TodoDto> todoList = new ArrayList<>();
+        // list.forEach(todo -> todoList.add(entityToDto(todo)));
+
+        List<TodoDto> todoList = list.stream().map(todo -> entityToDto(todo)).collect(Collector.toList());
         return todoList;
     }
 
@@ -36,8 +39,9 @@ public class TodoServiceImpl {
     public List<TodoDto> getCompletedList() {
         List<Todo> result = todoRepository.findByCompleted(true);
 
-        List<TodoDto> compList = new ArrayList<>();
-        result.forEach(todo -> compList.add(entityToDto(todo)));
+        // List<TodoDto> compList = new ArrayList<>();
+        // result.forEach(todo -> compList.add(entityToDto(todo)));
+        List<TodoDto> compList = result.stream().map(todo -> entityToDto(todo)).collect(Collector.toList());
         return compList;
     }
 

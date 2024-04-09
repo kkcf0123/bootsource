@@ -1,7 +1,7 @@
 package com.example.book.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,8 +21,7 @@ public class BookDto {
     private String title;
     private String writer;
     private Integer price;
-
-    @Column(name = "sale_price")
     private Integer salePrice;
-
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
 }
