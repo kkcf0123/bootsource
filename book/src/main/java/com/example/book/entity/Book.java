@@ -1,7 +1,5 @@
 package com.example.book.entity;
 
-import org.hibernate.annotations.ManyToAny;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,7 +15,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Table(name = "BOOKTBL")
 @Builder
 @Getter
 @Setter
@@ -43,6 +39,7 @@ public class Book extends BaseEntity {
     @Column(nullable = false)
     private Integer price;
 
+    @Column(nullable = false)
     private Integer salePrice;
 
     // ~One = fetchType : eager(default)

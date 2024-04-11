@@ -3,6 +3,7 @@ package com.example.todo.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class TodoServiceImpl {
         // List<TodoDto> todoList = new ArrayList<>();
         // list.forEach(todo -> todoList.add(entityToDto(todo)));
 
-        List<TodoDto> todoList = list.stream().map(todo -> entityToDto(todo)).collect(Collector.toList());
+        List<TodoDto> todoList = list.stream().map(todo -> entityToDto(todo)).collect(Collectors.toList());
         return todoList;
     }
 
@@ -41,7 +42,7 @@ public class TodoServiceImpl {
 
         // List<TodoDto> compList = new ArrayList<>();
         // result.forEach(todo -> compList.add(entityToDto(todo)));
-        List<TodoDto> compList = result.stream().map(todo -> entityToDto(todo)).collect(Collector.toList());
+        List<TodoDto> compList = result.stream().map(todo -> entityToDto(todo)).collect(Collectors.toList());
         return compList;
     }
 

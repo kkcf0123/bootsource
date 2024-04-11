@@ -1,15 +1,22 @@
 package com.example.book.repository;
 
+import static org.junit.jupiter.api.DynamicTest.stream;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.book.entity.Book;
 import com.example.book.entity.Category;
 import com.example.book.entity.Publisher;
 
+@SpringBootTest
 public class BookRepositoryTest {
 
     @Autowired
@@ -23,14 +30,18 @@ public class BookRepositoryTest {
     public void insertCategoryTest() {
         Category category = Category.builder().name("컴퓨터").build();
         categoryRepository.save(category);
-        Category category2 = Category.builder().name("경제/경영").build();
-        categoryRepository.save(category2);
-        Category category3 = Category.builder().name("인문").build();
-        categoryRepository.save(category3);
-        Category category4 = Category.builder().name("소설").build();
-        categoryRepository.save(category4);
-        Category category5 = Category.builder().name("자기계발").build();
-        categoryRepository.save(category5);
+
+        category = Category.builder().name("경제/경영").build();
+        categoryRepository.save(category);
+
+        category = Category.builder().name("인문").build();
+        categoryRepository.save(category);
+
+        category = Category.builder().name("소설").build();
+        categoryRepository.save(category);
+
+        category = Category.builder().name("자기계발").build();
+        categoryRepository.save(category);
 
         // categoryRepository.save(Category.builder().name("컴퓨터").build());
         // categoryRepository.save(Category.builder().name("경제/경영").build());
@@ -65,9 +76,34 @@ public class BookRepositoryTest {
             Book book = Book.builder().price(25000).salePrice(22000)
                     .title("쥬시쿨" + i)
                     .writer("빙그레" + i)
-                    .category(Category.builder().id((i % 5) + i).build())
-                    .publisher(Publisher.builder().id((i % 5) + i).build())
+                    .category(Category.builder().id((i % 5) + 1).build())
+                    .publisher(Publisher.builder().id((i % 5) + 1).build())
                     .build();
+            bookRepository.save(book);
         });
     }
+
+    @Test
+    public void testBookList() {
+        List<Book> books = bookRepository.findAll();
+
+        books.forEach(book -> {
+            System.out.println(book);
+            // System.out.println("출판사 : " + book.getPublisher().getName());
+            // System.out.println("분야 : " + book.getCategory().getName());
+        });
+    }
+
+    @Test
+    public void testCateNameList() {
+        List<Category> list = categoryRepository.findAll();
+
+        list.forEach(category -> System.out.println(category));
+        // List<String> cateList = new ArrayList<>();
+        // list.forEach(category -> cateList.add(category.getName()));
+
+        List<String> cateList = list.stream().map(entity -> entity.getName()).collect(Collectors.toList());
+        cateList.forEach(System.out::println);
+    }
+
 }
