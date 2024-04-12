@@ -81,9 +81,10 @@ public class BoardRepositoryTest {
         // "Content");
         // list.forEach(System.out::println);
 
-        Pageable pageable = PageRequest.of(1, 10);
-        List<Board> list = boardRepository.findByIdGreaterThanOrderByIdDesc(0L, pageable);
-        list.forEach(System.out::println);
+        // Pageable pageable = PageRequest.of(1, 10);
+        // List<Board> list = boardRepository.findByIdGreaterThanOrderByIdDesc(0L,
+        // pageable);
+        // list.forEach(System.out::println);
         // System.out.println("Greater " + list.size());
     }
 }

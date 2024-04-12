@@ -1,6 +1,7 @@
 package com.example.mart;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -141,5 +142,15 @@ public class MartRepositoryTest {
     // System.out.println(delivery);
     // System.out.println("관련 주문 " + delivery.getOrder());
     // }
+
+    @Test
+    public void testJoinTest() {
+        List<Object[]> list = orderRepository.joinList();
+        for (Object[] objects : list) {
+            Order order = (Order) objects[0];
+            Member member = (Member) objects[1];
+
+        }
+    }
 
 }

@@ -11,6 +11,11 @@ import java.util.stream.LongStream;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 
 import com.example.book.entity.Book;
 import com.example.book.entity.Category;
@@ -104,6 +109,24 @@ public class BookRepositoryTest {
 
         List<String> cateList = list.stream().map(entity -> entity.getName()).collect(Collectors.toList());
         cateList.forEach(System.out::println);
+    }
+
+    @Test
+    public void testSearchList() {
+
+        // paging
+        // Pageable pageable = PageRequest.of(0, 10, Direction.DESC);
+        // Pageable pageable = PageRequest.of(0, 10, Direction.DESC, "id");
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("id").descending());
+
+        Page<Book> result = bookRepository.findAll(bookRepository.makePredicate(), pageable);
+
+        System.out.println(result);
+        System.out.println(result.getTotalElements());
+        System.out.println(result.getTotalPages());
+
+        result.getContent().forEach(book -> System.out.println(book));
+
     }
 
 }

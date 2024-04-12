@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.jpa.entity.Memo;
 
+import groovyjarjarantlr4.v4.Tool.Option;
+
 @SpringBootTest // test전용 클래스
 public class MemoRepositoryTest {
 
@@ -54,5 +56,19 @@ public class MemoRepositoryTest {
         Memo memo = result.get();
 
         memoRepository.delete(memo);
+    }
+
+    @Test
+    public void methodTest() {
+        List<Memo> list = memoRepository.findByMnoLessThan(5L);
+        // Memo memo = result.get();
+        list.forEach(System.out::println);
+
+        list = memoRepository.findByMnoLessThanOrderByMnoDesc(10L);
+        list.forEach(System.out::println);
+
+        list = memoRepository.findByMnoBetween(50L, 70L);
+        list.forEach(System.out::println);
+
     }
 }
