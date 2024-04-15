@@ -1,3 +1,5 @@
 1. 라이브러리
 
-2. 
+2. 템플릿
+
+3. 8080, /guestbookk/list => list.html 셋팅
