@@ -3,3 +3,9 @@
 2. 템플릿
 
 3. 8080, /guestbookk/list => list.html 셋팅
+
+4. entity 설계
+
+5. entity, repository 작성
+
+6. test data insert => repository test
