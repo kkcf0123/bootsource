@@ -2,6 +2,7 @@ package com.example.book.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,9 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.book.dto.BookDto;
+import com.example.book.dto.PageRequestDto;
+import com.example.book.dto.PageResultDto;
+import com.example.book.entity.Book;
 import com.example.book.service.BookService;
 import com.example.book.service.BookServiceImpl;
 
@@ -33,25 +37,33 @@ public class BookController {
     private final BookService service;
 
     @GetMapping("/list")
-    public void list(Model model) {
+    public void list(Model model, @ModelAttribute("pageRequestDto") PageRequestDto pageRequestDto) {
         log.info("list 요청");
-        List<BookDto> list = service.getList();
-        model.addAttribute("list", list);
+        PageResultDto<BookDto, Book> result = service.getList(pageRequestDto);
+        model.addAttribute("result", result);
 
     }
 
-    @GetMapping("/modify")
-    public void modifyGet(Long id, Model model) {
+    @GetMapping(value = { "/read", "/modify" })
+    public void modifyGet(Long id, Model model, PageRequestDto pageRequestDto) {
         BookDto dto = service.getRow(id);
         model.addAttribute("dto", dto);
         log.info("read or modify 요청");
     }
 
     @PostMapping("/modify")
-    public String modifyPost(BookDto updateBookDto, RedirectAttributes rttr) {
+    public String modifyPost(BookDto updateBookDto, @ModelAttribute("pageRequestDto") PageRequestDto pageRequestDto,
+            RedirectAttributes rttr) {
         Long id = service.bookUpdate(updateBookDto);
 
+        // 조회화면으로 이동
         rttr.addAttribute("id", id);
+
+        // 페이지 나누기 정보
+        rttr.addAttribute("page", pageRequestDto.getPage());
+        rttr.addAttribute("type", pageRequestDto.getType());
+        rttr.addAttribute("keyword", pageRequestDto.getKeyword());
+
         return "redirect:/book/read";
     }
 
@@ -71,14 +83,8 @@ public class BookController {
         }
 
         Long id = service.bookCreate(dto);
-        rttr.addFlashAttribute("result", id);
+        rttr.addFlashAttribute("msg", id);
         return "redirect:/book/list";
-    }
-
-    @GetMapping("/read")
-    public void readGet(Long id, Model model) {
-        BookDto dto = service.getRow(id);
-        model.addAttribute("dto", dto);
     }
 
     @PostMapping("/delete")

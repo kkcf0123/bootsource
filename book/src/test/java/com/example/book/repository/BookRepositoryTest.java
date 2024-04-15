@@ -119,7 +119,7 @@ public class BookRepositoryTest {
         // Pageable pageable = PageRequest.of(0, 10, Direction.DESC, "id");
         Pageable pageable = PageRequest.of(0, 10, Sort.by("id").descending());
 
-        Page<Book> result = bookRepository.findAll(bookRepository.makePredicate(), pageable);
+        Page<Book> result = bookRepository.findAll(bookRepository.makePredicate("t", "1"), pageable);
 
         System.out.println(result);
         System.out.println(result.getTotalElements());

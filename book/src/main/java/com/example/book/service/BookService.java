@@ -3,13 +3,15 @@ package com.example.book.service;
 import java.util.List;
 
 import com.example.book.dto.BookDto;
+import com.example.book.dto.PageRequestDto;
+import com.example.book.dto.PageResultDto;
 import com.example.book.entity.Book;
 import com.example.book.entity.Category;
 import com.example.book.entity.Publisher;
 
 public interface BookService {
 
-    List<BookDto> getList();
+    PageResultDto<BookDto, Book> getList(PageRequestDto requestDto);
 
     Long bookCreate(BookDto dto);
 
