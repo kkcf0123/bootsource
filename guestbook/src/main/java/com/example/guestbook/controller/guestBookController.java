@@ -16,6 +16,7 @@ import com.example.guestbook.service.GuestBookService;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -33,35 +34,43 @@ public class GuestBookController {
     private final GuestBookService service;
 
     @GetMapping("/list")
-    public void getList(PageRequestDto requestDto, Model model) {
+    public void getList(@ModelAttribute("requestDto") PageRequestDto requestDto, Model model) {
 
         PageResultDto<GuestBookDto, GuestBook> result = service.getList(requestDto);
 
-        model.addAttribute("result", service.getList(requestDto));
+        model.addAttribute("result", result);
         // List<GuestBookDto> list = service.getList();
         // model.addAttribute("list", list);
         // model.addAttribute("list", service.getList());
-
     }
 
     @GetMapping(value = { "/read", "/modify" })
-    public void getRead(@RequestParam Long gno, Model model) {
+    public void getRead(@RequestParam Long gno, Model model, @ModelAttribute("requestDto") PageRequestDto requestDto) {
         GuestBookDto dto = service.getRow(gno);
         model.addAttribute("dto", dto);
     }
 
     @PostMapping("/modify")
-    public String postModify(RedirectAttributes rttr, GuestBookDto guestBookDto) {
+    public String postModify(RedirectAttributes rttr, GuestBookDto guestBookDto,
+            @ModelAttribute("requestDto") PageRequestDto requestDto) {
 
         Long gno = service.updateRow(guestBookDto);
 
         rttr.addAttribute("gno", gno);
+        rttr.addAttribute("page", requestDto.getPage());
+        rttr.addAttribute("type", requestDto.getType());
+        rttr.addAttribute("keyword", requestDto.getKeyword());
         return "redirect:/guestbook/read";
     }
 
     @PostMapping("/delete")
-    public String postDelete(@RequestParam Long gno, RedirectAttributes rttr) {
+    public String postDelete(@RequestParam Long gno, RedirectAttributes rttr,
+            @ModelAttribute("requestDto") PageRequestDto requestDto) {
         service.deleteRow(gno);
+
+        rttr.addAttribute("page", requestDto.getPage());
+        rttr.addAttribute("type", requestDto.getType());
+        rttr.addAttribute("keyword", requestDto.getKeyword());
 
         return "redirect:/guestbook/list";
     }
@@ -73,7 +82,7 @@ public class GuestBookController {
 
     @PostMapping("/create")
     public String createPost(@Valid GuestBookDto dto, BindingResult result, RedirectAttributes rttr,
-            Model model) {
+            Model model, @ModelAttribute("requestDto") PageRequestDto requestDto) {
 
         if (result.hasErrors()) {
             return "/guestbook/create";
@@ -81,6 +90,9 @@ public class GuestBookController {
 
         Long gno = service.createRow(dto);
         rttr.addFlashAttribute("msg", gno);
+        rttr.addAttribute("page", requestDto.getPage());
+        rttr.addAttribute("type", requestDto.getType());
+        rttr.addAttribute("keyword", requestDto.getKeyword());
         return "redirect:/guestbook/list";
     }
 }

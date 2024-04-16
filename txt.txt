@@ -17,3 +17,27 @@ GET
 
 페이지 나누기 정보를 저장하기 위한 객체 필요 => PageRequestDto
 
+
+
+where절
+jpa
+1. findBy~ : 동적 쿼리 어려움
+2. @Query() : 동적 쿼리 작성 어려움
+3. QueryDSL
+    3-1) QuerydslPredicateExecutor impliments
+    Q Class
+    sql Query문을 메소드처럼 호출 가능
+
+    3-2) QuerydslRepositorySupport 상속
+
+
+entity 1개짜리 -> book, guestbook
+CRUD + pagenation + search
+
+게시글(master) : 회원 => N:1
+한명의 회원은 여러개의 게시글을 작성한다.
+하나의 게시글의 한명의 회원이 작성한다. 
+
+댓글(master) : 게시글  => N:1
+하나의 게시글에는 여러개의 댓글이 작성된다.
+하나의 댓글은 하나의 게시글에 속한다.
