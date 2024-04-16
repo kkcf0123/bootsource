@@ -2,7 +2,7 @@ package com.example.guestbook.dto;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,11 +19,14 @@ import lombok.ToString;
 public class GuestBookDto {
     private Long gno;
 
+    @NotBlank(message = "check Writer")
     private String title;
 
-    private String content;
-
+    @NotBlank(message = "check Title")
     private String writer;
+
+    @NotBlank(message = "check Content")
+    private String content;
 
     private LocalDateTime createdDate;
 

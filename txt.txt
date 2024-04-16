@@ -9,3 +9,11 @@
 5. entity, repository 작성
 
 6. test data insert => repository test
+
+pagenation
+목록처리
+GET
+/list?page=1&size=20
+
+페이지 나누기 정보를 저장하기 위한 객체 필요 => PageRequestDto
+
