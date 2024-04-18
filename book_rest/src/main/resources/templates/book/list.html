@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout}">
+  <div layout:fragment="content" class="container mt-5">
+    <h3>도서 목록</h3>
+
+    <table class="table table-hover mt-2">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">분류</th>
+          <th scope="col">제목</th>
+          <th scope="col">저자</th>
+          <th scope="col">출판사</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="dto : ${result.dtoList}">
+          <th scope="row" th:text="${dto.id}"></th>
+          <td th:text="${dto.categoryName}"></td>
+          <td>
+            <a
+              class="text-decoration-none text-reset"
+              th:text="${dto.title}"
+              th:href="@{read(id=${dto.id}, page=${page}, type=${pageRequestDto.type}, keyword=${pageRequestDto.keyword})}"
+              data-id="${dto.id}"
+            ></a>
+          </td>
+          <td th:text="${dto.writer}"></td>
+          <td th:text="${dto.publisherName}"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <a class="btn btn-success" th:href="@{list(page=1, type='', keyword='')}">전체목록</a>
+    <!-- page -->
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" th:if="${result.prev}">
+          <a class="page-link" th:href="@{list(page=${result.start-1}, type=${pageRequestDto.type}, keyword=${pageRequestDto.keyword})}">Previous</a>
+        </li>
+
+        <li th:class="'page-item ' + ${result.page == page ? 'active':''}" th:each="page : ${result.pageList}">
+          <a class="page-link" th:text="${page}" th:href="@{list(page=${page}, type=${pageRequestDto.type}, keyword=${pageRequestDto.keyword})}"></a>
+        </li>
+
+        <li class="page-item" th:if="${result.next}">
+          <a class="page-link" th:href="@{list(page=${result.end+1}, type=${pageRequestDto.type}, keyword=${pageRequestDto.keyword})}">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <th:block layout:fragment="script">
+    <script>
+      const result = "[[${msg}]]";
+      if (result) {
+        alert("success");
+      }
+    </script>
+    <script th:src="@{/js/list.js}"></script>
+  </th:block>
+</html>
