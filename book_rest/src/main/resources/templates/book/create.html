@@ -2,11 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout}">
   <div layout:fragment="content" class="container mt-5">
     <h3>도서 추가</h3>
-    <form action="" method="post" th:object="${bookDto}" novalidate>
+    <form action="" method="post" th:object="${bookDto}" novalidate id="createForm">
       <div class="mb-3 row">
         <label for="category" class="col-sm-2 col-form-label">분류</label>
         <div class="col-sm-10">
-          <!-- db에서 값 불러와서 옵션넣어줌 -->
           <select name="categoryName" id="" class="form-select">
             <option value="" th:selected="${bookDto.categoryName} == ''">선택</option>
             <option th:each="cate : ${categories}" th:value="${cate}" th:text="${cate}" th:selected="${bookDto.categoryName} == ${cate}"></option>
@@ -25,7 +24,7 @@
       <div class="mb-3 row">
         <label for="title" class="col-sm-2 col-form-label">제목</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="title" name="title" th:value="${bookDto.title}" />
+          <input type="text" class="form-control" id="title" name="title" th:value="${bookDto.title}" //>
           <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
         </div>
       </div>
@@ -46,7 +45,7 @@
       <div class="mb-3 row">
         <label for="writer" class="col-sm-2 col-form-label">작가</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="writer" name="writer" th:value="${bookDto.writer}" />
+          <input type="text" class="form-control" id="writer" name="writer" th:value="${bookDto.writer}" //>
           <div class="text-danger" th:if="${#fields.hasErrors('writer')}" th:errors="*{writer}"></div>
         </div>
       </div>
@@ -68,9 +67,12 @@
         <button type="submit" class="btn btn-primary">등록</button>
         <button type="reset" class="btn btn-danger">취소</button>
       </div>
-      <input type="hidden" name="page" th:value="${1}" />
-      <input type="hidden" name="type" th:value="${pageRequestDto.type}" />
-      <input type="hidden" name="keyword" th:value="${pageRequestDto.keyword}" />
+      <input type="hidden" name="page" th:value="1" />
+      <input type="hidden" name="type" th:value="${requestDto.type}" />
+      <input type="hidden" name="keyword" th:value="${requestDto.keyword}" />
     </form>
+    <th:block layout:fragment="script">
+      <script th:src="@{/js/create.js}"></script>
+    </th:block>
   </div>
 </html>

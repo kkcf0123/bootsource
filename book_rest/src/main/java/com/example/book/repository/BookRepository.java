@@ -17,6 +17,7 @@ public interface BookRepository extends JpaRepository<Book, Long>, QuerydslPredi
         // id > 0
         builder.and(book.id.gt(0L));
 
+        // 검색
         // 검색 타입이 없는 경우
         if (type == null)
             return builder;
@@ -28,10 +29,8 @@ public interface BookRepository extends JpaRepository<Book, Long>, QuerydslPredi
             builder.and(book.title.contains(keyword));
         } else if (type.equals("w")) {
             builder.and(book.writer.contains(keyword));
-
         }
 
         return builder;
     }
-
 }

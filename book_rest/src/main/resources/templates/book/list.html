@@ -21,8 +21,8 @@
             <a
               class="text-decoration-none text-reset"
               th:text="${dto.title}"
-              th:href="@{read(id=${dto.id}, page=${page}, type=${pageRequestDto.type}, keyword=${pageRequestDto.keyword})}"
-              data-id="${dto.id}"
+              th:href="@{read(id=${dto.id},page=${requestDto.page},type=${requestDto.type},keyword=${requestDto.keyword})}"
+              th:data-id="${dto.id}"
             ></a>
           </td>
           <td th:text="${dto.writer}"></td>
@@ -31,29 +31,74 @@
       </tbody>
     </table>
 
-    <a class="btn btn-success" th:href="@{list(page=1, type='', keyword='')}">전체목록</a>
+    <a class="btn btn-success" th:href="@{list(page=1,type='',keyword='')}">전체목록</a>
     <!-- page -->
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
+        <!-- result.prev 값에 따라 -->
         <li class="page-item" th:if="${result.prev}">
-          <a class="page-link" th:href="@{list(page=${result.start-1}, type=${pageRequestDto.type}, keyword=${pageRequestDto.keyword})}">Previous</a>
+          <a class="page-link" th:href="@{list(page=${result.start-1},type=${requestDto.type},keyword=${requestDto.keyword})}">Previous</a>
         </li>
 
         <li th:class="'page-item ' + ${result.page == page ? 'active':''}" th:each="page : ${result.pageList}">
-          <a class="page-link" th:text="${page}" th:href="@{list(page=${page}, type=${pageRequestDto.type}, keyword=${pageRequestDto.keyword})}"></a>
+          <a class="page-link" th:text="${page}" th:href="@{list(page=${page},type=${requestDto.type},keyword=${requestDto.keyword})}"></a>
         </li>
-
+        <!-- result.next 값에 따라 -->
         <li class="page-item" th:if="${result.next}">
-          <a class="page-link" th:href="@{list(page=${result.end+1}, type=${pageRequestDto.type}, keyword=${pageRequestDto.keyword})}">Next</a>
+          <a class="page-link" th:href="@{list(page=${result.end+1},type=${requestDto.type},keyword=${requestDto.keyword})}">Next</a>
         </li>
       </ul>
     </nav>
+    <!-- 데이터 보여주기 -->
+    <form action="" method="post" class="mb-5">
+      <div class="mb-3 row">
+        <label for="category" class="col-sm-2 col-form-label">분류</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="category" name="category" readonly value="" />
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="title" class="col-sm-2 col-form-label">제목</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="title" name="title" readonly value="" />
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="publisher" class="col-sm-2 col-form-label">출판사</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="publisher" name="publisher" value="" />
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="writer" class="col-sm-2 col-form-label">작가</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="writer" name="writer" readonly value="" />
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="price" class="col-sm-2 col-form-label">가격</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="price" name="price" readonly value="" />
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="salePrice" class="col-sm-2 col-form-label">할인가격</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="salePrice" name="salePrice" readonly value="" />
+        </div>
+      </div>
+      <div>
+        <a class="btn btn-primary" href="">삭제</a>
+        <a class="btn btn-secondary" href="">목록</a>
+      </div>
+      <input type="hidden" name="id" value="" id="book_id" />
+    </form>
   </div>
   <th:block layout:fragment="script">
     <script>
       const result = "[[${msg}]]";
       if (result) {
-        alert("success");
+        alert("성공했습니다.");
       }
     </script>
     <script th:src="@{/js/list.js}"></script>

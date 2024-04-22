@@ -20,7 +20,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Log4j2
 @Controller
@@ -73,7 +72,8 @@ public class BookController {
     }
 
     @PostMapping("/create")
-    public String postCreate(@Valid BookDto dto, BindingResult result, RedirectAttributes rttr, Model model) {
+    public String postCreate(@Valid BookDto dto, BindingResult result, RedirectAttributes rttr, Model model,
+            @ModelAttribute("requestDto") PageRequestDto requestDto) {
         log.info("book post 요청 {}", dto);
 
         if (result.hasErrors()) {
@@ -83,6 +83,12 @@ public class BookController {
 
         // insert 작성
         Long id = service.bookCreate(dto);
+
+        // 페이지 나누기 정보
+        rttr.addAttribute("page", requestDto.getPage());
+        rttr.addAttribute("type", requestDto.getType());
+        rttr.addAttribute("keyword", requestDto.getKeyword());
+
         rttr.addFlashAttribute("msg", id);
         return "redirect:/book/list";
     }

@@ -17,26 +17,25 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(exclude = "books")
+@Setter
 @Builder
 @Getter
-@Setter
-@ToString(exclude = "books")
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 public class Publisher extends BaseEntity {
 
-    @SequenceGenerator(name = "book_publisher_seq_gen", sequenceName = "book_publisher_seq", allocationSize = 1)
+    @SequenceGenerator(name = "book_publisher_seq_gen", sequenceName = "publisher_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_publisher_seq_gen")
     @Id
     @Column(name = "publisher_id")
     private Long id;
 
-    @Column(name = "publisher_name", nullable = false)
+    @Column(name = "publisher_name")
     private String name;
 
-    // manytoone의 반대는 list
     @Builder.Default
-    @OneToMany(mappedBy = "publisher") // book에 publisher를 연결할 때 넣은 로컬변수
+    @OneToMany(mappedBy = "publisher")
     private List<Book> books = new ArrayList<>();
 }

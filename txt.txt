@@ -48,3 +48,16 @@ CRUD + pagenation + search
     - reply
      부모글 삭제시 댓글까지 다 삭제. bno로 삭제
      
+ssr(server side rendering) : jsp thymeleaf
+
+데이터만 주고받기 -> ajax
+
+spa(single page application)
+csr(client side rendering) : react, vue
+
+1.ajax
+ - jquery : $ajax()
+ js의 성능을 보완하기 위해서 썼었지만 이젠 js의 성능이 더 좋음
+
+ - fetch()
+ - axios() : node.js

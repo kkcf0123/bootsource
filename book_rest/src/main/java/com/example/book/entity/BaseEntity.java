@@ -11,10 +11,10 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 
-@MappedSuperclass
-@EntityListeners(value = AuditingEntityListener.class)
-@Getter
 @Setter
+@Getter
+@EntityListeners(value = AuditingEntityListener.class)
+@MappedSuperclass // BaseEntity 상속할 경우 필드를 컬럼으로 인식하기
 public abstract class BaseEntity {
 
     @CreatedDate

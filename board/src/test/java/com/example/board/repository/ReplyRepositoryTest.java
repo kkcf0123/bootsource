@@ -1,5 +1,6 @@
 package com.example.board.repository;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,22 @@ public class ReplyRepositoryTest {
 
             replyRepository.save(reply);
         });
+    }
+
+    @Test
+    public void getRow() {
+        Reply reply = replyRepository.findById(2L).get();
+        System.out.println(reply);
+
+        System.out.println(reply.getBoard());
+    }
+
+    @Test
+    public void getReplies() {
+        Board board = Board.builder().bno(100L).build();
+        List<Reply> replies = replyRepository.getReliesByBoardOrOrderByRno(board);
+
+        System.out.println(replies.toString());
     }
 
 }

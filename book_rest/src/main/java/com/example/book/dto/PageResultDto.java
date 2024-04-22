@@ -11,7 +11,8 @@ import org.springframework.data.domain.Pageable;
 import lombok.Data;
 
 // java Generics
-// PageResultDto<DTO, EN> : ~Dto와 Entity를 담는다는 얘기
+// PageResultDto<DTO, EN> : ~DTO, Entity 객체 담기 위한 구조 설계
+// Box<T>
 
 @Data
 public class PageResultDto<DTO, EN> {
@@ -21,10 +22,13 @@ public class PageResultDto<DTO, EN> {
     // 총 페이지 번호
     private int totalPage;
 
+    // 현재 페이지 번호
+    private int page;
+
     // 목록 크기(한 페이지에 보여줄 게시물 수)
     private int size;
 
-    // 시작 끝 페이지 번호
+    // 시작, 끝 페이지 번호
     private int start, end;
 
     private boolean prev, next;
@@ -32,26 +36,29 @@ public class PageResultDto<DTO, EN> {
     // 페이지 번호 목록
     private List<Integer> pageList;
 
-    private int page;
-
     public PageResultDto(Page<EN> result, Function<EN, DTO> fn) {
         dtoList = result.stream().map(fn).collect(Collectors.toList());
 
+        // 총 개수 / 한 페이지당 보여줄 게시물 수
         totalPage = result.getTotalPages();
         makePageList(result.getPageable());
     }
 
     private void makePageList(Pageable pageable) {
-        // pageable.getPageNumber() : 클라이언트가 요청한 페이지 번호 ( 0시작)
+        // pageable.getPageNumber() : 사용자가 요청한 페이지 번호(페이지 번호가 0부터 시작)
+        // 실제 페이지는 1부터 시작하니까 +1
         this.page = pageable.getPageNumber() + 1;
+        // 한 페이지당 보여줄 게시물 수
         this.size = pageable.getPageSize();
 
         int tempEnd = (int) (Math.ceil(page / 10.0)) * 10;
         this.start = tempEnd - 9;
-        this.prev = start > 1;
         this.end = totalPage > tempEnd ? tempEnd : totalPage;
+        this.prev = start > 1;
         this.next = totalPage > tempEnd;
-        this.pageList = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
 
+        // int 타입으로 1~10 생성 ==> List<Integer> list
+        // boxed() : int ==> Integer
+        this.pageList = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
     }
 }

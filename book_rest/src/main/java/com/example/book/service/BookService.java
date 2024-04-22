@@ -10,7 +10,10 @@ import com.example.book.entity.Category;
 import com.example.book.entity.Publisher;
 
 public interface BookService {
+    // 페이지 나누기 전
+    // List<BookDto> getList();
 
+    // 페이지 나누기 후
     PageResultDto<BookDto, Book> getList(PageRequestDto requestDto);
 
     Long bookCreate(BookDto dto);
@@ -24,25 +27,27 @@ public interface BookService {
     void bookDelete(Long id);
 
     public default BookDto entityToDto(Book book) {
+
         return BookDto.builder()
                 .id(book.getId())
                 .title(book.getTitle())
                 .writer(book.getWriter())
-                .price(book.getPrice())
-                .salePrice(book.getSalePrice())
                 .categoryName(book.getCategory().getName())
                 .publisherName(book.getPublisher().getName())
-                .createdDate(book.getCreatedDate())
+                .price(book.getPrice())
+                .salePrice(book.getSalePrice())
+                .createDate(book.getCreatedDate())
                 .lastModifiedDate(book.getLastModifiedDate())
                 .build();
     }
 
     public default Book dtoToEntity(BookDto dto) {
+
         return Book.builder()
-                .title(dto.getTitle())
-                .writer(dto.getWriter())
                 .price(dto.getPrice())
                 .salePrice(dto.getSalePrice())
+                .title(dto.getTitle())
+                .writer(dto.getWriter())
                 .build();
     }
 }
